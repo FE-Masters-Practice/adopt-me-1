@@ -28301,7 +28301,13 @@ function Pet(_ref) {
   var name = _ref.name,
       animal = _ref.animal,
       breed = _ref.breed;
-  return _react.default.createElement('div', {}, [_react.default.createElement('h1', {}, name), _react.default.createElement('h1', {}, animal), _react.default.createElement('h2', {}, breed)]);
+  //   return React.createElement('div', {}, [
+  //     React.createElement('h1', {}, name),
+  //     React.createElement('h1', {}, animal),
+  //     React.createElement('h2', {}, breed),
+  //   ]);
+  // }
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, " ", name), /*#__PURE__*/_react.default.createElement("h2", null, " ", animal), /*#__PURE__*/_react.default.createElement("h2", null, " ", breed, " "));
 }
 },{"react":"../node_modules/react/index.js"}],"App.js":[function(require,module,exports) {
 "use strict";
@@ -28359,7 +28365,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51692" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52182" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
