@@ -30019,7 +30019,64 @@ var useDropdown = function useDropdown(label, defaultState, options) {
 
 var _default = useDropdown;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"searchParams.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"Pet.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = Pet;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function Pet(_ref) {
+  var name = _ref.name,
+      animal = _ref.animal,
+      breed = _ref.breed;
+  //   return React.createElement('div', {}, [
+  //     React.createElement('h1', {}, name),
+  //     React.createElement('h1', {}, animal),
+  //     React.createElement('h2', {}, breed),
+  //   ]);
+  // }
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, " ", name), /*#__PURE__*/_react.default.createElement("h2", null, " ", animal), /*#__PURE__*/_react.default.createElement("h2", null, " ", breed, " "));
+}
+},{"react":"../node_modules/react/index.js"}],"Results.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Pet = _interopRequireDefault(require("./Pet"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Results = function Results(_ref) {
+  var pets = _ref.pets;
+  return /*#__PURE__*/_react.default.createElement("div", {
+    className: "search"
+  }, pets.length === 0 ? /*#__PURE__*/_react.default.createElement("h1", null, " No Pets Found ") : pets.map(function (pet) {
+    return /*#__PURE__*/_react.default.createElement(_Pet.default, {
+      animal: pet.animal,
+      key: pet.id,
+      name: pet.name,
+      breed: pet.breeds.primary,
+      media: pet.photos,
+      location: "".concat(pet.contact.address.city, ", ").concat(pet.contact.address.state),
+      id: pet.id
+    });
+  }));
+};
+
+var _default = Results;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./Pet":"Pet.js"}],"searchParams.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -30032,6 +30089,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _pet = _interopRequireWildcard(require("@frontendmasters/pet"));
 
 var _useDropdown5 = _interopRequireDefault(require("./useDropdown"));
+
+var _Results = _interopRequireDefault(require("./Results"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30149,7 +30208,12 @@ var SearchParams = function SearchParams() {
   }, [animal]);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: "search-params"
-  }, /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("label", {
+  }, /*#__PURE__*/_react.default.createElement("form", {
+    onSubmit: function onSubmit(e) {
+      e.preventDefault();
+      requestPets();
+    }
+  }, /*#__PURE__*/_react.default.createElement("label", {
     htmlFor: "location"
   }, "Location", /*#__PURE__*/_react.default.createElement("input", {
     id: "location",
@@ -30158,7 +30222,9 @@ var SearchParams = function SearchParams() {
     onChange: function onChange(e) {
       return updateLocation(e.target.value);
     }
-  })), /*#__PURE__*/_react.default.createElement(AnimalDropdown, null), /*#__PURE__*/_react.default.createElement(BreedDropdown, null), /*#__PURE__*/_react.default.createElement("button", null, "Submit")));
+  })), /*#__PURE__*/_react.default.createElement(AnimalDropdown, null), /*#__PURE__*/_react.default.createElement(BreedDropdown, null), /*#__PURE__*/_react.default.createElement("button", null, "Submit")), /*#__PURE__*/_react.default.createElement(_Results.default, {
+    pets: pets
+  }));
 };
 
 var _default = SearchParams; // search Params gets rendered, gets all of its info, sets up its hooks
@@ -30169,7 +30235,7 @@ var _default = SearchParams; // search Params gets rendered, gets all of its inf
 // goes to API, calls animal, re renders with new breeds
 
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./useDropdown":"useDropdown.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./useDropdown":"useDropdown.js","./Results":"Results.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -30213,7 +30279,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55911" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56561" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
