@@ -30039,6 +30039,10 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -30071,21 +30075,65 @@ var SearchParams = function SearchParams() {
       _useDropdown4 = _slicedToArray(_useDropdown3, 3),
       breed = _useDropdown4[0],
       BreedDropdown = _useDropdown4[1],
-      updateBreed = _useDropdown4[2];
+      setBreed = _useDropdown4[2];
+
+  var _useState5 = (0, _react.useState)([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      pets = _useState6[0],
+      setPet = _useState6[1];
+
+  function requestPets() {
+    return _requestPets.apply(this, arguments);
+  } // async functions are guaranteed to aLWAYS return a promise that will resolve whenever the function completes
+
+
+  function _requestPets() {
+    _requestPets = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+      var _yield$pet$animals, animals;
+
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _pet.default.animals({
+                location: location,
+                breed: breed,
+                type: animal
+              });
+
+            case 2:
+              _yield$pet$animals = _context.sent;
+              animals = _yield$pet$animals.animals;
+              setPets(animals || []);
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+    return _requestPets.apply(this, arguments);
+  }
 
   (0, _react.useEffect)(function () {
-    updateBreeds([]);
-    updateBreed('');
+    setBreeds([]);
+    setBreed('');
 
     _pet.default.breeds(animal).then(function (_ref) {
-      var breeds = _ref.breeds;
-      var breedStrings = breeds.map(function (_ref2) {
+      var apiBreeds = _ref.breeds;
+      var breedStrings = apiBreeds.map(function (_ref2) {
         var name = _ref2.name;
         return name;
       });
       setBreeds(breedStrings);
     }, console.error);
-  });
+  }, [animal, setBreed, setBreeds]); // these are the dependency arrays. We are telling the effect to only rerender when these things CHANGE..
+  // adding an empty dependency array [] ensures that the effect only runs once!!
+  // not including a dependency array, it runs everytime anything updates, causing an infinite loop. STAY AWAY FROM THIS.
+  // hooks replaced having to use the component lifecycle  (componentDidMount, componentDidUpdate, etc)
+
   (0, _react.useEffect)(function () {
     updateBreeds([]);
     updateBreed('');
@@ -30113,7 +30161,13 @@ var SearchParams = function SearchParams() {
   })), /*#__PURE__*/_react.default.createElement(AnimalDropdown, null), /*#__PURE__*/_react.default.createElement(BreedDropdown, null), /*#__PURE__*/_react.default.createElement("button", null, "Submit")));
 };
 
-var _default = SearchParams;
+var _default = SearchParams; // search Params gets rendered, gets all of its info, sets up its hooks
+// schedules useEffect (but it doesn't happen yet) it doesn't happen on the first render
+// renders all of the markup so user can see it
+// then, runs the scheduled effect
+// going to call the useEffect function
+// goes to API, calls animal, re renders with new breeds
+
 exports.default = _default;
 },{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./useDropdown":"useDropdown.js"}],"App.js":[function(require,module,exports) {
 "use strict";
