@@ -30034,14 +30034,27 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function Pet(_ref) {
   var name = _ref.name,
       animal = _ref.animal,
-      breed = _ref.breed;
-  //   return React.createElement('div', {}, [
-  //     React.createElement('h1', {}, name),
-  //     React.createElement('h1', {}, animal),
-  //     React.createElement('h2', {}, breed),
-  //   ]);
-  // }
-  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, " ", name), /*#__PURE__*/_react.default.createElement("h2", null, " ", animal), /*#__PURE__*/_react.default.createElement("h2", null, " ", breed, " "));
+      breed = _ref.breed,
+      media = _ref.media,
+      location = _ref.location,
+      id = _ref.id;
+  var hero = 'http://placecorgi.com/300/300';
+
+  if (media.length) {
+    hero = media[0].small;
+  }
+
+  return /*#__PURE__*/_react.default.createElement("a", {
+    href: "/details/".concat(id),
+    className: "Pet"
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "image-container"
+  }, /*#__PURE__*/_react.default.createElement("img", {
+    src: hero,
+    alt: name
+  })), /*#__PURE__*/_react.default.createElement("div", {
+    className: "info"
+  }, /*#__PURE__*/_react.default.createElement("h1", null, " ", name, " "), /*#__PURE__*/_react.default.createElement("h2", null, " ", "".concat(animal, " - ").concat(breed, " - ").concat(location), " ")));
 }
 },{"react":"../node_modules/react/index.js"}],"Results.js":[function(require,module,exports) {
 "use strict";
@@ -30279,7 +30292,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56561" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64936" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
